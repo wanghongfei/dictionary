@@ -38,25 +38,18 @@ public class YoudaoConnector implements Connector {
 	}
 	
 	public void connect() throws IOException {
-		String ip = "http://" + fetchIP(source.getUrl().getHost());
-		//URLConnection conn = doConnect();
-		URLConnection conn = doConnect(ip);
+		String ip = fetchIP(source.getUrl().getHost());
+		if (null == ip) {
+			System.out.println("DNS lookup timeout");
+			System.exit(0);
+		}
+		
+		String ipURL = "http://" + ip;
+		URLConnection conn = doConnect(ipURL);
 		String html = fetchHtml(conn);
 	}
 	
-	/**
-	 * For test purpose only!
-	 * @param html
-	 * @return
-	 */
-	protected String fetchHtml() throws IOException {
-		//URLConnection conn = doConnect();
-		String ip = "http://" + fetchIP(source.getUrl().getHost());
-		URLConnection conn = doConnect(ip);
-		String html = fetchHtml(conn);
-		
-		return html;
-	}
+
 	
 	private String fetchHtml(URLConnection conn) throws IOException {
 		InputStream in = conn.getInputStream();
@@ -108,5 +101,27 @@ public class YoudaoConnector implements Connector {
 		}
 		
 		return conn;
+	}
+	
+	
+	
+	
+	/**
+	 * For test purpose only!
+	 * @param html
+	 * @return
+	 */
+	protected String fetchHtml() throws IOException {
+		String ip = fetchIP(source.getUrl().getHost());
+		if (null == ip) {
+			System.out.println("DNS lookup timeout");
+			System.exit(0);
+		}
+		
+		String ipURL = "http://" + ip;
+		URLConnection conn = doConnect(ipURL);
+		String html = fetchHtml(conn);
+		
+		return html;
 	}
 }
