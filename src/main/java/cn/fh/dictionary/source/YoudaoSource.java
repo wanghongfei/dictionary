@@ -1,5 +1,7 @@
 package cn.fh.dictionary.source;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +9,22 @@ import java.util.Map.Entry;
 
 public class YoudaoSource implements Source {
 	
-	private String url = "http://dict.youdao.com/search";
+	private String urlString = "http://dict.youdao.com/search";
+	private URL url;
 	private List<Entry<String, String>> queryStringList;
 	
 	public YoudaoSource() {
 		queryStringList = new ArrayList<>();
+		try {
+			url = new URL(urlString);
+		} catch (MalformedURLException e) {
+			System.out.println("invalid url:" + urlString);
+			System.exit(0);
+		}
 	}
 
 	@Override
-	public String getUrl() {
+	public URL getUrl() {
 		return url;
 	}
 
@@ -26,7 +35,7 @@ public class YoudaoSource implements Source {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(url);
+		StringBuilder sb = new StringBuilder(urlString);
 		sb.append(toQueryString());
 		
 		return sb.toString();

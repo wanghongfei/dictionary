@@ -1,6 +1,8 @@
 package cn.fh.dictionary.source;
 
+import java.net.URL;
+
 public interface Source {
-	String getUrl();
+	URL getUrl();
 	void addQueryString(String key, String value);
 }

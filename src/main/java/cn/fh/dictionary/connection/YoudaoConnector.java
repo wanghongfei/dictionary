@@ -38,7 +38,9 @@ public class YoudaoConnector implements Connector {
 	}
 	
 	public void connect() throws IOException {
-		URLConnection conn = doConnect();
+		String ip = "http://" + fetchIP(source.getUrl().getHost());
+		//URLConnection conn = doConnect();
+		URLConnection conn = doConnect(ip);
 		String html = fetchHtml(conn);
 	}
 	
@@ -48,7 +50,9 @@ public class YoudaoConnector implements Connector {
 	 * @return
 	 */
 	protected String fetchHtml() throws IOException {
-		URLConnection conn = doConnect();
+		//URLConnection conn = doConnect();
+		String ip = "http://" + fetchIP(source.getUrl().getHost());
+		URLConnection conn = doConnect(ip);
 		String html = fetchHtml(conn);
 		
 		return html;
@@ -68,12 +72,26 @@ public class YoudaoConnector implements Connector {
 		
 		return sb.toString();
 	}
+	
+	private String fetchIP(String host) {
+		DNSLookupThread th = new DNSLookupThread(host);
+		String ip = null;
+		th.start();
+		try {
+			th.join(2000);
+			ip = th.getIP();
+		} catch (InterruptedException e) {
+		}
+		
+		return ip;
+	}
 
-	private URLConnection doConnect() {
+	private URLConnection doConnect(String ip) {
 		URLConnection conn = null;
 		try {
 
-			URL url = new URL(source.getUrl());
+			//URL url = new URL(source.getUrl());
+			URL url = new URL(ip);
 			conn = url.openConnection();
 			conn.setConnectTimeout(3000);
 			conn.connect();
