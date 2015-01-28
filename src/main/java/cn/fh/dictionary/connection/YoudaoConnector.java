@@ -13,6 +13,7 @@ import java.util.List;
 import cn.fh.dictionary.source.Source;
 import cn.fh.dictionary.word.Explaination;
 
+
 public class YoudaoConnector implements Connector {
 	private Source source;
 	
@@ -37,6 +38,10 @@ public class YoudaoConnector implements Connector {
 		this.source = source;
 	}
 	
+	/**
+	 * 发起查询请求，并获取结果
+	 * @throws IOException
+	 */
 	public void connect() throws IOException {
 		String ip = fetchIP(source.getUrl().getHost());
 		if (null == ip) {
@@ -66,6 +71,11 @@ public class YoudaoConnector implements Connector {
 		return sb.toString();
 	}
 	
+	/**
+	 * 得到目标主机的IP地址
+	 * @param host 主机名
+	 * @return
+	 */
 	private String fetchIP(String host) {
 		DNSLookupThread th = new DNSLookupThread(host);
 		String ip = null;

@@ -7,10 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+/**
+ * 有道词典数据源
+ * @author whf
+ *
+ */
 public class YoudaoSource implements Source {
 	
+	/**
+	 * 可发起GET请求的地址
+	 */
 	private String urlString = "http://dict.youdao.com/search";
 	private URL url;
+	/**
+	 * 查询参数
+	 */
 	private List<Entry<String, String>> queryStringList;
 	
 	public YoudaoSource() {
@@ -41,6 +52,10 @@ public class YoudaoSource implements Source {
 		return sb.toString();
 	}
 	
+	/**
+	 * 构造查询字符串.如: "?name=Neo&age=18"
+	 * @return
+	 */
 	private String toQueryString() {
 		StringBuilder sb = new StringBuilder("?");
 
