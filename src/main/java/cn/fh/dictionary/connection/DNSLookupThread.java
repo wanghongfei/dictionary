@@ -19,11 +19,11 @@ public class DNSLookupThread extends Thread {
 		}
 	}
 	
-	private void set(InetAddress addr) {
+	private synchronized void set(InetAddress addr) {
 		this.addr = addr;
 	}
 	
-	public String getIP() {
+	public synchronized String getIP() {
 		if (null != this.addr) {
 			return addr.getHostAddress();
 		}
