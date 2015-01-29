@@ -1,5 +1,8 @@
 ## Dictionary
 
+### Introduction
+* 可以从多家词典网站查询单词，目前仅完成对有道词典(dict.youdao.com)的适配.
+* 提供CLI的GUI用户接口
 
 ### CLI usage
 ```
