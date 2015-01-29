@@ -51,6 +51,12 @@ public class YoudaoConnector implements Connector {
 
 	@Override
 	public Word fetchResult() {
+		try {
+			connect();
+		} catch (IOException e) {
+			out.println("操作失败");
+			System.exit(0);
+		}
 		List<Explaination> expList = parser.getExplainationList();
 		return new Word(this.word, expList);
 	}

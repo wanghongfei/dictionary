@@ -48,7 +48,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>cn.fh.NetworkTest</mainClass>
+									<mainClass>cn.fh.dictionary.cli.CLI</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
