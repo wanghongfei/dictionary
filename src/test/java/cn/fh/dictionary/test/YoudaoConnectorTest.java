@@ -7,13 +7,13 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import cn.fh.dictionary.connection.YoudaoConnector;
+import cn.fh.dictionary.connection.DefaultConnector;
 import cn.fh.dictionary.source.Source;
 import cn.fh.dictionary.source.YoudaoParser;
 import cn.fh.dictionary.source.YoudaoSource;
 import cn.fh.dictionary.word.Word;
 
-public class YoudaoConnectorTest extends YoudaoConnector {
+public class YoudaoConnectorTest extends DefaultConnector {
 	@Before
 	public void init() {
 	}

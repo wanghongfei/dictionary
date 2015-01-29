@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import cn.fh.dictionary.connection.Connector;
-import cn.fh.dictionary.connection.YoudaoConnector;
+import cn.fh.dictionary.connection.DefaultConnector;
+import cn.fh.dictionary.source.KingsoftParser;
+import cn.fh.dictionary.source.KingsoftSource;
 import cn.fh.dictionary.source.Parser;
 import cn.fh.dictionary.source.Source;
 import cn.fh.dictionary.source.YoudaoParser;
@@ -37,9 +39,18 @@ public class CLI {
 		
 		Arguments arg = new Arguments(args);
 
-		Parser parser = new YoudaoParser();
-		Source source = new YoudaoSource();
-		Connector connector = new YoudaoConnector();
+		Parser parser = null;
+		Source source = null;
+		Connector connector = new DefaultConnector();
+
+		String dict = arg.getArg("-s");
+		if ("youdao".equals(dict)) {
+			parser = new YoudaoParser();
+			source = new YoudaoSource();
+		} else if ("kingsoft".equals(dict)) {
+			parser = new KingsoftParser();
+			source = new KingsoftSource();
+		}
 
 		String word = arg.getArg("-w");
 		if (null == word) {
@@ -55,13 +66,19 @@ public class CLI {
 		out.println("单词: " + wordResult.getWord());
 		List<Explaination> expList = wordResult.getExplainList();
 		expList.stream().forEach((exp) -> {
-			out.println("\t 词性:" + exp.getAttribute() + ".");
-			out.println("\t 释意:" + exp.getEngExplaination() + ".");
+			out.println("\t 词性:" + exp.getAttribute());
+			out.println("\t 英文释意:" + exp.getEngExplaination());
+			out.println("\t 中文释意:" + exp.getChinExplaination());
+			out.println();
+			out.println();
 			
-			exp.getSentenceList().stream().forEach((sentence) -> {
-				out.println("\t\t 例句:" + sentence.getEnglish());
-				out.println("\t\t     " + sentence.getChinese());
-			});
+			if (null != exp.getSentenceList()) {
+				exp.getSentenceList().stream().forEach((sentence) -> {
+					out.println("\t\t 例句:" + sentence.getEnglish());
+					out.println("\t\t     " + sentence.getChinese());
+					out.println();
+				});
+			}
 		});
 
 	}
@@ -70,7 +87,7 @@ public class CLI {
 		out.println("dict-cli.sh [option] [parameter]");
 		out.println("\toption:");
 		out.println("\t\t-w: 指定要查询的单词");
-		out.println("\t\t-s: 指定词典(暂只支持-s youdao)");
+		out.println("\t\t-s: 指定词典(暂只支持-s youdao 或 -s kingsoft)");
 		out.println("\t\t-h: 显示此信息");
 		out.println("\texample:");
 		out.println("\t\t dict-cli.sh -w apple // 查apple单词");

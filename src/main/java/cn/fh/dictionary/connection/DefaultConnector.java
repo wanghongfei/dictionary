@@ -21,7 +21,7 @@ import cn.fh.dictionary.word.Word;
  * @author whf
  *
  */
-public class YoudaoConnector implements Connector {
+public class DefaultConnector implements Connector {
 	private Source source;
 	private String html;
 	private String word;
@@ -35,11 +35,11 @@ public class YoudaoConnector implements Connector {
 	 */
 	private Parser parser;
 	
-	public YoudaoConnector() {
+	public DefaultConnector() {
 		
 	}
 	
-	public YoudaoConnector(Source s, Parser parser) {
+	public DefaultConnector(Source s, Parser parser) {
 		this.source = s;
 		this.parser = parser;
 	}
