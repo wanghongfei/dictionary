@@ -4,6 +4,10 @@
 * 可以从多家词典网站查询单词，目前已完成对有道词典(dict.youdao.com)和金山词霸(www.iciba.com)的适配.
 * 后续计划适配百度翻译
 * 提供CLI和GUI用户接口
+* `cn.fh.dictionary.connection.Connector`接口定义了一个连接器，一个连接器需要与`Source`, `Parser` 组合在一起才能使用。该接口的实现类为`DefaultConnector`
+* `cn.fh.dictionary.source.Source`接口定义了查询来源，该接口实现类为`YoudaoSource`, `KingsoftSource`
+* `cn.fh.dictionary.word`包定义了单词(`Word`),例句(`Sentence`), 释意(`Explaination`)
+* `cn.fh.dictionary.source.Parser`接口定义了指定数据源的HTML解析器，实现类有`YoudaoParser`, `KingsoftParser`
 
 ### CLI usage
 ```
