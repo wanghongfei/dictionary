@@ -13,6 +13,7 @@ import java.util.List;
 import cn.fh.dictionary.source.Parser;
 import cn.fh.dictionary.source.Source;
 import cn.fh.dictionary.word.Explaination;
+import cn.fh.dictionary.word.Word;
 
 /**
  * 向有道词典网站发起连接，并得到HTML代码
@@ -23,6 +24,7 @@ import cn.fh.dictionary.word.Explaination;
 public class YoudaoConnector implements Connector {
 	private Source source;
 	private String html;
+	private String word;
 	
 	private final int BUF_SIZE = 1024 * 1024 * 500; // 500KB
 	private final int TIMEOUT = 3000; // 3s
@@ -41,10 +43,16 @@ public class YoudaoConnector implements Connector {
 		this.source = s;
 		this.parser = parser;
 	}
+	
+	@Override
+	public void setWord(String word) {
+		this.word = word;
+	}
 
 	@Override
-	public List<Explaination> fetchResult() {
-		return parser.getExplainationList();
+	public Word fetchResult() {
+		List<Explaination> expList = parser.getExplainationList();
+		return new Word(this.word, expList);
 	}
 
 	@Override
@@ -62,8 +70,10 @@ public class YoudaoConnector implements Connector {
 	 * @throws IOException
 	 */
 	public void connect() throws IOException {
-		out.println(source.getUrl().toString() + source.getQueryString());
-		URLConnection conn = doConnect(source.getUrl().toString() + source.getQueryString());
+		source.setWord(this.word);
+
+		out.println(source.getUrl());
+		URLConnection conn = doConnect(source.getUrl());
 		this.html = fetchHtml(conn);
 	}
 

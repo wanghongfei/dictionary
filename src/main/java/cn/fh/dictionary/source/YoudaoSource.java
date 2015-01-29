@@ -18,29 +18,37 @@ public class YoudaoSource implements Source {
 	 * 可发起GET请求的地址
 	 */
 	private String urlString = "http://dict.youdao.com/search";
-	private URL url;
 	/**
 	 * 查询参数
 	 */
 	private List<Entry<String, String>> queryStringList;
+	private final String WORD_KEY = "q";
 	
 	public YoudaoSource() {
 		queryStringList = new ArrayList<>();
-		try {
-			url = new URL(urlString);
-		} catch (MalformedURLException e) {
-			System.out.println("invalid url:" + urlString);
-			System.exit(0);
-		}
+		addQueryString("keyfrom", "dict.top");
+		addQueryString("le", "eng");
+		
+
 	}
 
 	@Override
-	public URL getUrl() {
-		return url;
+	public String getUrl() {
+		return this.urlString + getQueryString();
+	}
+	
+	@Override
+	public void setWord(String word) {
+		// 先删除之前的word
+		this.queryStringList.removeIf((entry) -> {
+			return entry.getKey().equals(WORD_KEY);
+		});
+		
+		// 添加新word
+		this.queryStringList.add(new SimpleEntry<String, String>(WORD_KEY, word));
 	}
 
-	@Override
-	public void addQueryString(String key, String value) {
+	protected void addQueryString(String key, String value) {
 		this.queryStringList.add(new SimpleEntry<String, String>(key, value));
 	}
 

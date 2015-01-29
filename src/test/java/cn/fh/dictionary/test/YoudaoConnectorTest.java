@@ -45,10 +45,8 @@ public class YoudaoConnectorTest extends YoudaoConnector {
 	@Test
 	public void testConnection() throws IOException {
 		Source s = new YoudaoSource();
-		s.addQueryString("q", "have");
-		s.addQueryString("keyfrom", "dict.top");
-		s.addQueryString("le", "eng");
 		setSource(s);
+		setWord("apple");
 		
 		connect();
 	}

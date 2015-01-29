@@ -8,7 +8,8 @@ import java.net.URL;
  *
  */
 public interface Source {
-	URL getUrl();
+	String getUrl();
 	String getQueryString();
-	void addQueryString(String key, String value);
+	void setWord(String word);
+	//void addQueryString(String key, String value);
 }
