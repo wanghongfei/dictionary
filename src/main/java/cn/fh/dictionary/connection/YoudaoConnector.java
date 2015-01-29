@@ -8,18 +8,18 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import cn.fh.dictionary.source.Parser;
 import cn.fh.dictionary.source.Source;
 import cn.fh.dictionary.word.Explaination;
 
-
+/**
+ * 向有道词典网站发起连接，并得到HTML代码
+ * 
+ * @author whf
+ *
+ */
 public class YoudaoConnector implements Connector {
 	private Source source;
 	private String html;
@@ -27,20 +27,31 @@ public class YoudaoConnector implements Connector {
 	private final int BUF_SIZE = 1024 * 1024 * 500; // 500KB
 	private final int TIMEOUT = 3000; // 3s
 	
+	/**
+	 * 用于解析HTML代码的解析器
+	 * HTML解析工作委托给此对象
+	 */
+	private Parser parser;
+	
 	public YoudaoConnector() {
 		
 	}
 	
-	public YoudaoConnector(Source s) {
+	public YoudaoConnector(Source s, Parser parser) {
 		this.source = s;
+		this.parser = parser;
 	}
 
 	@Override
 	public List<Explaination> fetchResult() {
-		parse();
-		return null;
+		return parser.getExplainationList();
 	}
 
+	@Override
+	public void setParser(Parser parser) {
+		this.parser = parser;
+	}
+	
 	@Override
 	public void setSource(Source source) {
 		this.source = source;
@@ -51,39 +62,11 @@ public class YoudaoConnector implements Connector {
 	 * @throws IOException
 	 */
 	public void connect() throws IOException {
-		/*String ip = fetchIP(source.getUrl().getHost());
-		if (null == ip) {
-			System.out.println("DNS lookup timeout");
-			System.exit(0);
-		}*/
-		
-		//String ipURL = "http://" + ip + "/search" + source.getQueryString();
-		//out.println(ipURL);
 		out.println(source.getUrl().toString() + source.getQueryString());
 		URLConnection conn = doConnect(source.getUrl().toString() + source.getQueryString());
 		this.html = fetchHtml(conn);
 	}
-	
-	/**
-	 * 解析HTML文档
-	 * @return
-	 */
-	private List<Explaination> parse() {
-		List<Explaination> expList = new ArrayList<>();
-		
-		Document doc = Jsoup.parse(this.html);
-		Elements elems = doc.select("#collinsResult .ol li");
-		for (Element tag : elems) {
-			Elements meanningResult = tag.select(".collinsMajorTrans p");
-			Element meanningTag = meanningResult.first();
-			if (null != meanningTag) {
-				out.println(meanningTag.text());
-			}
-		}
-		
-		return expList;
-	}
-	
+
 	private String fetchHtml(URLConnection conn) throws IOException {
 		InputStream in = conn.getInputStream();
 		byte[] buf = new byte[BUF_SIZE];
@@ -133,9 +116,10 @@ public class YoudaoConnector implements Connector {
 			// 从线程中返回已经连接完成的对象
 			conn = cTh.getConnectedObj();
 			if (null == conn) {
-				out.print("timeout");
+				out.print("connection timeout");
 				System.exit(0);
 			}
+			out.println("connection established");
 
 		} catch (MalformedURLException e) {
 			out.println("invalid url:" + source.getUrl());
@@ -152,5 +136,7 @@ public class YoudaoConnector implements Connector {
 		
 		return conn;
 	}
+
+
 
 }
