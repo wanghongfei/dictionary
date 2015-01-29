@@ -67,8 +67,8 @@ public class CLI {
 		List<Explaination> expList = wordResult.getExplainList();
 		expList.stream().forEach((exp) -> {
 			out.println("\t 词性:" + exp.getAttribute());
-			out.println("\t 英文释意:" + exp.getEngExplaination());
-			out.println("\t 中文释意:" + exp.getChinExplaination());
+			out.println("\t 英文释义:" + exp.getEngExplaination());
+			out.println("\t 中文释义:" + exp.getChinExplaination());
 			out.println();
 			out.println();
 			
