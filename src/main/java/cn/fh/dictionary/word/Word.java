@@ -15,6 +15,17 @@ public class Word {
 		this.explainList = explainList;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("单词:");
+		sb.append(word);
+		
+		this.explainList.stream().forEach((exp) -> {
+			sb.append(exp.toString());
+		});
+		
+		return sb.toString();
+	}
 	
 	
 	public String getWord() {

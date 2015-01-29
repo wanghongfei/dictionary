@@ -4,13 +4,14 @@ package cn.fh.dictionary.test;
 
 import java.io.IOException;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import cn.fh.dictionary.connection.YoudaoConnector;
 import cn.fh.dictionary.source.Source;
+import cn.fh.dictionary.source.YoudaoParser;
 import cn.fh.dictionary.source.YoudaoSource;
+import cn.fh.dictionary.word.Word;
 
 public class YoudaoConnectorTest extends YoudaoConnector {
 	@Before
@@ -38,16 +39,16 @@ public class YoudaoConnectorTest extends YoudaoConnector {
 		
 	}
 	
-	/**
-	 * 测试连接是否能正常发起
-	 * @throws IOException
-	 */
+	
 	@Test
-	public void testConnection() throws IOException {
+	public void testQuery() throws IOException {
 		Source s = new YoudaoSource();
 		setSource(s);
+		setParser(new YoudaoParser());
 		setWord("apple");
 		
 		connect();
+		Word word = fetchResult();
+		System.out.println(word);
 	}
 }

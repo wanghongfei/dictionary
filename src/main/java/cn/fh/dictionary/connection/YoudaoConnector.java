@@ -75,6 +75,7 @@ public class YoudaoConnector implements Connector {
 		out.println(source.getUrl());
 		URLConnection conn = doConnect(source.getUrl());
 		this.html = fetchHtml(conn);
+		parser.setHtml(html);
 	}
 
 	private String fetchHtml(URLConnection conn) throws IOException {
