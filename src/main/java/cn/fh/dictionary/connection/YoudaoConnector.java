@@ -133,7 +133,7 @@ public class YoudaoConnector implements Connector {
 			// 从线程中返回已经连接完成的对象
 			conn = cTh.getConnectedObj();
 			if (null == conn) {
-				out.print("connection timeout");
+				out.println("connection timeout");
 				System.exit(0);
 			}
 			out.println("connection established");

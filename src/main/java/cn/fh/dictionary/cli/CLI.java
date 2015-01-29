@@ -55,8 +55,8 @@ public class CLI {
 		out.println("单词: " + wordResult.getWord());
 		List<Explaination> expList = wordResult.getExplainList();
 		expList.stream().forEach((exp) -> {
-			out.println("\t " + exp.getAttribute() + ".");
-			out.println("\t " + exp.getEngExplaination() + ".");
+			out.println("\t 词性:" + exp.getAttribute() + ".");
+			out.println("\t 释意:" + exp.getEngExplaination() + ".");
 			
 			exp.getSentenceList().stream().forEach((sentence) -> {
 				out.println("\t\t 例句:" + sentence.getEnglish());

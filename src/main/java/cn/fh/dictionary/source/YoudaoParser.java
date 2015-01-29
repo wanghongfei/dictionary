@@ -42,7 +42,7 @@ public class YoudaoParser implements Parser {
 
 		//得到包含释意html代码的最顶层结点
 		Elements elems = doc.select("#collinsResult .wt-container").first().select(".ol li");
-		System.out.println(elems.size());
+		//System.out.println(elems.size());
 
 		List<Explaination> expList = new ArrayList<>();
 		for (Element tag : elems) {
@@ -76,9 +76,7 @@ public class YoudaoParser implements Parser {
 		// 解析释意
 		// 过虑掉无用标签
 		Element meanningElem = tag.select(".collinsMajorTrans p").first();
-		meanningElem.children().removeIf( (elem) -> {
-			return elem.tagName().equals("b") || elem.className().equals("additional");
-		});
+		meanningElem.select("span").remove();
 		exp.setEngExplaination(meanningElem.text());
 
 		return exp;
