@@ -9,5 +9,6 @@ import java.net.URL;
  */
 public interface Source {
 	URL getUrl();
+	String getQueryString();
 	void addQueryString(String key, String value);
 }

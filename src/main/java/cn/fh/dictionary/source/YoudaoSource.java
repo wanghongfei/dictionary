@@ -47,7 +47,7 @@ public class YoudaoSource implements Source {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(urlString);
-		sb.append(toQueryString());
+		sb.append(getQueryString());
 		
 		return sb.toString();
 	}
@@ -56,7 +56,8 @@ public class YoudaoSource implements Source {
 	 * 构造查询字符串.如: "?name=Neo&age=18"
 	 * @return
 	 */
-	private String toQueryString() {
+	@Override
+	public String getQueryString() {
 		StringBuilder sb = new StringBuilder("?");
 
 		int len = this.queryStringList.size();
