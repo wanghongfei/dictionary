@@ -1,7 +1,7 @@
 ## Dictionary
 
 ### Introduction
-* 可以从多家词典网站查询单词，目前已完成对有道词典(dict.youdao.com)和金山词霸(http://www.iciba.com/)的适配.
+* 可以从多家词典网站查询单词，目前已完成对有道词典(dict.youdao.com)和金山词霸(www.iciba.com)的适配.
 * 后续计划适配百度翻译
 * 提供CLI和GUI用户接口
 
