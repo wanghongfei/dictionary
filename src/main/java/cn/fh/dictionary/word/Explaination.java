@@ -6,14 +6,14 @@ public class Explaination {
 	private String attribute;
 	private String engExplaination;
 	private String ChinExplaination;
-	private List<String> sentenceList;
+	private List<Sentence> sentenceList;
 	
 	public Explaination() {
 	
 	}
 
 	public Explaination(String attribute, String engExplaination,
-			String chinExplaination, List<String> sentenceList) {
+			String chinExplaination, List<Sentence> sentenceList) {
 		this.attribute = attribute;
 		this.engExplaination = engExplaination;
 		ChinExplaination = chinExplaination;
@@ -37,10 +37,10 @@ public class Explaination {
 	public void setChinExplaination(String chinExplaination) {
 		ChinExplaination = chinExplaination;
 	}
-	public List<String> getSentenceList() {
+	public List<Sentence> getSentenceList() {
 		return sentenceList;
 	}
-	public void setSentenceList(List<String> sentenceList) {
+	public void setSentenceList(List<Sentence> sentenceList) {
 		this.sentenceList = sentenceList;
 	}
 }
