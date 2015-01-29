@@ -75,7 +75,7 @@ public class YoudaoParser implements Parser {
 		
 		// 解析释意
 		// 过虑掉无用标签
-		Element meanningElem = tag.select(".collinsMajorTrans pgs").first();
+		Element meanningElem = tag.select(".collinsMajorTrans p").first();
 		meanningElem.children().removeIf( (elem) -> {
 			return elem.tagName().equals("b") || elem.className().equals("additional");
 		});
