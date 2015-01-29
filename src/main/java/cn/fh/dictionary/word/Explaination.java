@@ -19,6 +19,18 @@ public class Explaination {
 		ChinExplaination = chinExplaination;
 		this.sentenceList = sentenceList;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sentenceList.stream().forEach( (sentence) -> {
+			sb.append(sentence.toString());
+		});
+		
+		return "词性:" + this.attribute + ", 英文解释:" + this.engExplaination + ", 中文解释:" + this.ChinExplaination + ", 例句:" + sb.toString();
+	}
+
 	public String getAttribute() {
 		return attribute;
 	}

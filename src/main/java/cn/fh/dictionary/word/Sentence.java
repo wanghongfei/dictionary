@@ -10,6 +10,13 @@ public class Sentence {
 		this.english = english;
 		this.chinese = chinese;
 	}
+	
+	@Override
+	public String toString() {
+		return "sentence:" + english + ", " + chinese;
+	}
+	
+	
 	public String getEnglish() {
 		return english;
 	}
